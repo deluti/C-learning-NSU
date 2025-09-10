@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+double round5(double n, double num_of){ return (int)(n / num_of * 100000) / 100000.0;;}
+
+int main(void){
+    double num_of;
+    int counter[3] = {0, 0, 0};
+    scanf("%lf", &num_of);
+    int temp;
+    for (int i = 0; i < num_of; i++){
+        scanf("%d", &temp);
+        if (temp < 0) { counter[0]++; }
+        else if (temp == 0) { counter[1]++; }
+        else { counter[2]++; }
+    }
+    printf("%0.5lf %0.5lf %0.5lf", round5(counter[0], num_of), round5(counter[1], num_of), round5(counter[2], num_of));
+    return 0;
+}
