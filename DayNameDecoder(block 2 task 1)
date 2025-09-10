@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+int my_strlen(const char *str) {
+    int len = 0;
+    while (str[len] != '\0') {
+        len++;
+    }
+    return len;
+}
+int main(void)
+{
+    char *days_data[] = {"Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday"};
+
+    char user_enter[20];
+    int _days = 0;
+    int day_index = 0;
+    scanf("%s", &user_enter);
+    for (int i = 0; i < 7; i++){
+        int flag = 1;
+        for (int j = 0; j < my_strlen(user_enter); j++){
+            if (user_enter[j] != days_data[i][j]) { flag = 0; break; }
+        }
+        if (flag) { _days++; day_index = i+1; }
+    }
+    if (_days == 0) { printf("Invalid"); }
+    else if (_days == 1) { printf("%d", day_index); }
+    else { printf("Ambiguous"); }
+    return 0;
+}
