@@ -1,0 +1,15 @@
+#include <stdio.h>
+int main(void){
+    int left, right, k;
+    int num_of = 0;
+    scanf("%d %d %d", &left, &right, &k);
+    for (int i = left; i <= right; i++){
+        for (int j = 1; j <= (right - left); j++){
+            if (((i + j*(k-1)) <= right) && ((i + j*k) > right)){
+                num_of++;
+            }
+        }
+    }
+    printf("%d", num_of);
+    return 0;
+}
