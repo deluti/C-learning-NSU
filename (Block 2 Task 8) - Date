@@ -1,0 +1,31 @@
+// Задача №8 - 'ДАТА'
+#include <stdio.h>
+
+// Проверка года на високосный
+int isVisokosniy(int year){ return (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)); }
+
+int main(void){
+    // Колличества дней в каждом месяце
+    int num_of_days[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    // Дата, которую вводит пользователь в формате: [день, месяц, год]
+    int date[3] = {0, 0, 0};
+    // Колличество дней, на который происходит сдвиг
+    int shift_days_num = 0;
+    scanf("%d %d %d %d", &date[0], &date[1], &date[2], &shift_days_num);
+    // Проверка года на високосный. В феврале - 29 дней, если год високосный
+    if (isVisokosniy(date[2])) { num_of_days[1] = 29; }
+    // Цикл проходит от января, до месяца результата. date[1] приводим к виду индекса для num_of_days
+    date[0] += shift_days_num; date[1]--;
+    while (date[0] > num_of_days[date[1]]){
+        date[0] -= num_of_days[date[1]]; date[1]++;  
+        if (date[1] == 12) { 
+            date[1] = 0; date[2]++;      
+            // Проверка года на високосный. В феврале - 29 дней, если год високосный. Иначе - 28
+            if (isVisokosniy(date[2])) { num_of_days[1] = 29; }
+            else { num_of_days[1] = 28; }
+        }
+    }
+    // Вывод результата. date[1] приводим обратно в вид привычного месяца
+    printf("%d %d %d", date[0], ++date[1], date[2]);
+    return 0;
+}
