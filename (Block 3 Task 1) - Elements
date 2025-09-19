@@ -1,0 +1,22 @@
+// Задача №1 - 'СРАВНЕНИЕ ЭЛЕМЕНТОВ'
+#include <stdio.h>
+
+int main(void){
+    // num_of - колличество элементов массива
+    int num_of;
+    scanf("%d", &num_of);
+    int list[num_of];
+    // Заполнение массива
+    for (int i = 0; i < num_of; i++) { int temp; scanf("%d", &list[i]); }
+    // Берем число из массива
+    for (int i = 0; i < num_of; i++){
+        int count = 0;
+        // И сравниваем его с каждым следующим в этом цикле
+        for (int j = i; j < num_of; j++){
+            if (list[i] > list[j]) {count++; }
+        }
+        // Выводим результат
+        printf("%d ", count);
+    }
+    return 0;
+}
