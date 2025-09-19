@@ -1,0 +1,34 @@
+// Задача №9 - 'КОММЕНТАРИИ'
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(void){
+    // Подготовка файлов
+    FILE *input = fopen("input.txt", "r");
+    FILE *output = fopen("output.txt", "w");
+    // Подготовка строк
+    char string[1000000];
+    char all_string[1000000];
+    char tr[2] = "'0";
+    // Записываем по одной строке из файла в all_string
+    int is_blocked = 0; int is_texted = 0;
+    while (fgets(all_string, sizeof(all_string), input) != NULL) {
+        // В строку string записываем все, что не лежит в рамках '// something \n' и '/* something */'
+        int current_i = 0; string[0] = '\0';
+        for (int i = 0; i < strlen(all_string); i++){
+            // Проверяем, находится ли маркер внутри текста
+            if (i <= strlen(all_string)-1 && !is_blocked && all_string[i] == '"' && all_string[i-1] != tr[0]) { is_texted = !is_texted; }
+            // Границы '// something \n'
+            if (i <= strlen(all_string)-1 && !is_blocked && !is_texted && all_string[i] == '/' && all_string[i+1] == '/') { fprintf(output, "%c", '\n'); break; }
+            // Границы '/* something */'
+            if (i <= strlen(all_string)-1 && !is_texted && !is_blocked && all_string[i] == '/' && all_string[i+1] == '*') { is_blocked = 1; }
+            if (i > 0 && !is_texted && is_blocked && all_string[i-1] == '*' && all_string[i] == '/') { is_blocked = 0; continue;}
+            // Если не находимся среди границ комментариев, добавляем посимвольно all_string в string
+            if (!is_blocked || all_string[i] == '\n') { fprintf(output, "%c", all_string[i]); }
+        }
+    }
+    // Закрываем файлы
+    fclose(input); fclose(output);
+    return 0;
+}
