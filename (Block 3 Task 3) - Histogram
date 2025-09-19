@@ -1,0 +1,37 @@
+// Задача №3 - 'ГИСТОГРАММА'
+#include <stdio.h>
+
+int main(void){
+    // num_of - колличество элементов массива
+    int num_of;
+    scanf("%d", &num_of);
+    int list[num_of];
+    int max_ = 0;
+    // Заполнение массива
+    for (int i = 0; i < num_of; i++) { int temp; scanf("%d", &list[i]); }
+    // Сортировка
+    for (int i = 0; i < num_of; i++){
+        for (int j = 0; j < num_of; j++){
+            if (list[i] < list[j]){
+                list[i] += list[j];
+                list[j] = list[i] - list[j];
+                list[i] -= list[j];
+            }
+        }
+    }
+    max_ = list[num_of-1];
+    // i - колличество слагаемых
+    for (int i = 0; i <= num_of; i++){
+        // Сохраняем текущее число в value
+        int count = 0; int value = list[i];
+        if (value != -1){
+            // Заменяем числа, которые мы уже прошли на -1
+            for (int j = 0; j <= num_of; j++) {
+                if (value == list[j]) { count++; list[j] = -1; }
+            }
+            printf("%d: %d\n", value, count);
+            if (value == max_) { break; }
+        }
+    }
+    return 0;
+}
