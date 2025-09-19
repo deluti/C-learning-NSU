@@ -1,0 +1,19 @@
+// Задача №2 - 'СУММА K-ТЫХ'
+#include <stdio.h>
+
+int main(void){
+    // num_of - колличество элементов массива
+    int num_of;
+    scanf("%d", &num_of);
+    int list[num_of];
+    // Заполнение массива
+    for (int i = 0; i < num_of; i++) { int temp; scanf("%d", &list[i]); }
+    // i - колличество слагаемых
+    for (int i = 1; i <= num_of; i++){
+        int result = 0;
+        for (int j = i; j <= num_of; j+=i) { result += list[j-1]; }
+        // Выводим результат
+        printf("%d\n", result);
+    }
+    return 0;
+}
