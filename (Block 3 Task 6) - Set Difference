@@ -1,0 +1,60 @@
+// Задача № 6 - 'РАЗНИЦА МНОЖЕСТВ'
+#include <stdio.h>
+
+int isInList(int list[], int size, int num){
+    for (int i = 0; i < size; i++){
+        if (list[i] == '\0') { return 0; }
+        if (list[i] == num) {  return 1; }
+    }
+}
+
+int main(void){
+    // Инициализация
+    int num_of_A = 0;
+    int num_of_B = 0;
+    // Заполнение массива А
+    scanf("%d", &num_of_A);
+    int list_A[num_of_A];
+    for (int i = 0; i < num_of_A; i++) { scanf("%d", &list_A[i]); }
+    // Заполнение массива B
+    scanf("%d", &num_of_B);
+    int list_B[num_of_B];
+    for (int i = 0; i < num_of_B; i++) { scanf("%d", &list_B[i]); }
+    // Инициализация нового массива
+    int new_list[num_of_A + 1];
+    new_list[num_of_A] = '\0';
+    // Сравнение
+    int current_index = 0;
+    for (int i = 0; i < num_of_A; i++){
+        int is_Ai_in_B = 0;
+        for (int j = 0; j < num_of_B; j++){
+            if (list_A[i] == list_B[j]) { is_Ai_in_B = 1; break; }
+        }
+        if (!is_Ai_in_B && !isInList(new_list, sizeof(new_list), list_A[i])) {
+            new_list[current_index] = list_A[i]; current_index++; 
+            new_list[current_index] = '\0';
+        }
+    }
+    // Вывод
+    if (current_index == 0) { printf("0"); }
+    else {
+        // Сортировка финального списка
+        for (int i = 0; i < sizeof(new_list); i++){
+            if (new_list[i] == '\0') { break; }
+            for (int j = 0; j < sizeof(new_list); j++){
+                if (new_list[j] == '\0') { break; }
+                if (new_list[i] < new_list[j]){
+                    new_list[i] += new_list[j];
+                    new_list[j] = new_list[i] - new_list[j];
+                    new_list[i] -= new_list[j];
+                }
+            }
+        }
+        printf("%d\n", current_index);
+        for (int i = 0; i < sizeof(new_list); i++) { 
+            if (new_list[i] == '\0') { break; } 
+            printf("%d ", new_list[i]); 
+        }
+        return 0;
+    }   
+}
